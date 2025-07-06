@@ -2,12 +2,13 @@ name: Sync Artists Every 5 Hours
 
 on:
   schedule:
-    - cron: "0 */5 * * *" # Every 5 hours UTC
-  workflow_dispatch: # Allows manual run
+    - cron: '0 */5 * * *'  # every 5 hours
+  workflow_dispatch:       # manual trigger
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -15,12 +16,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (skip Chromium download)
+        run: |
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install
+
+      - name: Install Chromium manually
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
 
       - name: Run the sync script
         run: node runSync.js
         env:
-          FIREBASE_ADMIN_KEY: ${{ secrets.FIREBASE_ADMIN_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ./serviceAccountKey.json
