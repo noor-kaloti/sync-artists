@@ -1,0 +1,10 @@
+services:
+  - type: worker
+    name: sync-artists-worker
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node runSync.js
+    envVars:
+      - key: FIREBASE_ADMIN_KEY
+        fromEnvVar: FIREBASE_ADMIN_KEY
