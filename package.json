@@ -1,0 +1,14 @@
+{
+  "name": "sync-artists",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "runSync.js",
+  "scripts": {
+    "start": "node runSync.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.3.8",
+    "node-fetch": "^3.3.2",
+    "firebase-admin": "^11.11.1"
+  }
+}
