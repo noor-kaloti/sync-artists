@@ -181,14 +181,13 @@
 //   await browser.close();
 //   console.log("🎉 All artists synced.");
 // }
-// Use puppeteer-core
 import puppeteer from "puppeteer-core";
 import fetch from "node-fetch";
 import { getFirestore } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
 import { initializeApp, cert } from "firebase-admin/app";
 
-// Init Firebase only once
+// Initialize Firebase once
 if (!global._firebaseAppInitialized) {
   const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_KEY);
   console.log("FIREBASE_ADMIN_KEY defined:", !!process.env.FIREBASE_ADMIN_KEY);
@@ -320,12 +319,8 @@ export async function syncArtists() {
         }
 
         const docRef = db.collection("users").doc(uid);
-        const docSnap = await docRef.get();
-        if (docSnap.exists) {
-          console.log(`⏩ Already exists: ${name} (${email})`);
-          return;
-        }
 
+        // ✅ Always update the artist info, even if document already exists
         await docRef.set(
           {
             name,
@@ -342,7 +337,7 @@ export async function syncArtists() {
           { merge: true }
         );
 
-        console.log(`✅ Synced: ${name} (${email})`);
+        console.log(`✅ Synced (created/updated): ${name} (${email})`);
       } catch (err) {
         console.error(`❌ Failed to sync ${name || slug}: ${err.message}`);
       }
