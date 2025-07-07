@@ -1,5 +1,7 @@
 // /src/utils/syncArtists.js
-import puppeteer from "puppeteer";
+// import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core"; // ✅ CORRECT
+
 import fetch from "node-fetch";
 import { getFirestore } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
