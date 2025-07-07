@@ -22,6 +22,8 @@ import { initializeApp, cert } from "firebase-admin/app";
 
 if (!global._firebaseAppInitialized) {
   const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_KEY);
+  console.log("FIREBASE_ADMIN_KEY defined:", !!process.env.FIREBASE_ADMIN_KEY);
+
   initializeApp({
     credential: cert(serviceAccount),
   });

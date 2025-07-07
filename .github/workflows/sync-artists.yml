@@ -27,4 +27,4 @@ jobs:
       - name: Run sync script
         run: node runSync.js
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ./serviceAccountKey.json
+          FIREBASE_ADMIN_KEY: ${{ secrets.FIREBASE_ADMIN_KEY }}
